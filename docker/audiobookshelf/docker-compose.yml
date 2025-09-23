@@ -5,8 +5,8 @@ services:
     ports:
       - 13378:80
     volumes:
-      - /mnt/audiobooks:/audiobooks
-      - /mnt/podcasts:/podcasts
+      - /mnt/media/audiobooks:/audiobooks
+      - /mnt/media/podcasts:/podcasts
       - /mnt/config/audiobookshelf:/config
       - /mnt/config/audiobookshelf/metadata:/metadata
     environment:
