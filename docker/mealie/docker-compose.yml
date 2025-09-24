@@ -1,0 +1,72 @@
+---
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v3.2.1 # 
+    container_name: mealie
+    restart: unless-stopped
+    ports:
+        - "9925:9000" # 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - /mnt/config/mealie/data:/app/data/
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Chicago
+      BASE_URL: https://meals.homelab.so
+      # Database Settings
+      DB_ENGINE: postgres
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: mealie
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    container_name: postgres
+    image: postgres:17
+    restart: unless-stopped
+    volumes:
+      - /mnt/config/mealie/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mealie
+      POSTGRES_USER: mealie
+      PGUSER: mealie
+      POSTGRES_DB: mealie
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+    pgbackups:
+        image: prodrigestivill/postgres-backup-local
+        restart: unless-stopped
+        user: postgres:postgres # Optional: see below
+        volumes:
+            - /var/opt/pgbackups:/backups
+        links:
+            - postgres
+        depends_on:
+            - postgres
+        environment:
+            - POSTGRES_HOST=postgres
+            - POSTGRES_DB=database
+            - POSTGRES_USER=username
+            - POSTGRES_PASSWORD=password
+         #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+            - POSTGRES_EXTRA_OPTS=-Z1 --schema=public --blobs
+            - SCHEDULE=@daily
+            - BACKUP_ON_START=TRUE
+            - BACKUP_KEEP_DAYS=7
+            - BACKUP_KEEP_WEEKS=4
+            - BACKUP_KEEP_MONTHS=6
+            - HEALTHCHECK_PORT=8080
