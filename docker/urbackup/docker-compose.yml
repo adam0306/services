@@ -4,7 +4,7 @@ services:
     image: tailscale/tailscale:latest
     hostname: urbackup
     environment:
-      - TS_AUTHKEY=tskey-auth-kcbZhXHGu811CNTRL-9DoMyATMqS3snKLTjMjPS3kxiYqSUXJE
+      - TS_AUTHKEY=tskey-auth-blah
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_SERVE_CONFIG=/config/serve.json
       - TS_USERSPACE=true
