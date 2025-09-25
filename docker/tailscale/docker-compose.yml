@@ -1,5 +1,4 @@
 ---
-version: "3.7"
 services:
   tailscale-nginx:
     image: tailscale/tailscale:latest

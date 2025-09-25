@@ -1,6 +1,17 @@
-version: '2'
-
+---
 services:
+  urbackup-ts:
+    image: tailscale/tailscale:latest
+    hostname: urbackup
+    environment:
+      - TS_AUTHKEY=tskey-auth-kcbZhXHGu811CNTRL-9DoMyATMqS3snKLTjMjPS3kxiYqSUXJE
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_SERVE_CONFIG=/config/serve.json
+      - TS_USERSPACE=true
+    volumes:
+      - /mnt/blah/config/serve.json:/config/serve.json
+      - /mnt/blah/state:/var/lib/tailscale
+    restart: unless-stopped
   urbackup:
     image: uroni/urbackup-server:latest
     container_name: urbackup
@@ -8,13 +19,13 @@ services:
     environment:
       - PUID=1000 # Enter the UID of the user who should own the files here
       - PGID=100  # Enter the GID of the user who should own the files here
-      - TZ=Europe/Berlin # Enter your timezone
+      - TZ=America/Chicago # Enter your timezone
       # Uncomment the next lines if you want to set the ZFS datasets via ENV variables instead of mounting /etc/urbackup/dataset*
       #- ZFS_IMAGE=tank/images
       #- ZFS_FILES=tank/files
     volumes:
-      - /path/to/your/database/folder:/var/urbackup
-      - /path/to/your/backup/folder:/backups
+      - /mnt/blah/db:/var/urbackup
+      - /mnt/blah/backup:/backups
       # Uncomment the next line if you want to bind-mount the www-folder
       #- /path/to/wwwfolder:/usr/share/urbackup
     network_mode: "host"
