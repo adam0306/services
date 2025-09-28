@@ -60,26 +60,26 @@ services:
     shm_size: 128mb
     restart: unless-stopped
 
-    pgbackups:
-        image: prodrigestivill/postgres-backup-local
-        restart: unless-stopped
-        user: postgres:postgres # Optional: see below
-        volumes:
-            - /var/opt/pgbackups:/backups
-        links:
-            - postgres
-        depends_on:
-            - postgres
-        environment:
-            - POSTGRES_HOST=postgres
-            - POSTGRES_DB=database
-            - POSTGRES_USER=username
-            - POSTGRES_PASSWORD=password
-         #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
-            - POSTGRES_EXTRA_OPTS=-Z1 --schema=public --blobs
-            - SCHEDULE=@daily
-            - BACKUP_ON_START=TRUE
-            - BACKUP_KEEP_DAYS=7
-            - BACKUP_KEEP_WEEKS=4
-            - BACKUP_KEEP_MONTHS=6
-            - HEALTHCHECK_PORT=8080
+    # pgbackups:
+    #     image: prodrigestivill/postgres-backup-local
+    #     restart: unless-stopped
+    #     user: postgres:postgres # Optional: see below
+    #     volumes:
+    #         - /var/opt/pgbackups:/backups
+    #     links:
+    #         - postgres
+    #     depends_on:
+    #         - postgres
+    #     environment:
+    #         - POSTGRES_HOST=postgres
+    #         - POSTGRES_DB=database
+    #         - POSTGRES_USER=username
+    #         - POSTGRES_PASSWORD=password
+    #      #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+    #         - POSTGRES_EXTRA_OPTS=-Z1 --schema=public --blobs
+    #         - SCHEDULE=@daily
+    #         - BACKUP_ON_START=TRUE
+    #         - BACKUP_KEEP_DAYS=7
+    #         - BACKUP_KEEP_WEEKS=4
+    #         - BACKUP_KEEP_MONTHS=6
+    #         - HEALTHCHECK_PORT=8080
