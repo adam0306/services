@@ -1,3 +1,4 @@
+---
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -7,17 +8,26 @@ services:
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
-      # Add any other Stream port you want to expose
-      # - '21:21' # FTP
-
-    #environment:
-      # Uncomment this if you want to change the location of
-      # the SQLite DB file within the container
-      # DB_SQLITE_FILE: "/data/database.sqlite"
-
+    environment:
+      # Postgres parameters:
+      DB_POSTGRES_HOST: 'db'
+      DB_POSTGRES_PORT: '5432'
+      DB_POSTGRES_USER: 'npm'
+      DB_POSTGRES_PASSWORD: 'npmpass'
+      DB_POSTGRES_NAME: 'npm'
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
-
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - /mnt/config/npm/data:/data
+      - /mnt/config/npm/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: 'npm'
+      POSTGRES_PASSWORD: ${npm_postgres_password}
+      POSTGRES_DB: 'npm'
+    volumes:
+      - /mnt/config/npm/postgres:/var/lib/postgresql/data
