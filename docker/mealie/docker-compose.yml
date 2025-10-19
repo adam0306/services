@@ -22,7 +22,7 @@ services:
       # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
-      POSTGRES_PASSWORD: mealie
+      POSTGRES_PASSWORD: mealie-postgres
       POSTGRES_SERVER: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
@@ -37,7 +37,7 @@ services:
     volumes:
       - /mnt/config/mealie/pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: mealie
+      POSTGRES_PASSWORD: mealie-postgres
       POSTGRES_USER: mealie
       PGUSER: mealie
       POSTGRES_DB: mealie
