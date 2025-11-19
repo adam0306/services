@@ -1,6 +1,5 @@
 ---
 services:
-  # uncomment this section and comment out the mysql section to use postgres instead of mysql
   postgres:
     restart: unless-stopped
     image: postgres:14
