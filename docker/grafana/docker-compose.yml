@@ -6,6 +6,6 @@ services:
     restart: unless-stopped
     user: '0'
     ports:
-      - '3000:3000'
+      - '3003:3000'
     volumes:
       - '/mnt/config/grafana/data:/var/lib/grafana'
