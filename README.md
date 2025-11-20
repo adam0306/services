@@ -1,8 +1,8 @@
 # services
 
-- [] Authentik
-- [] Grafana
-- [] Loki
-- [] Rancher
-- [] npm
-- [] semaphore
+- [ ] Authentik
+- [ ] Grafana
+- [ ] Loki
+- [ ] Rancher
+- [ ] npm
+- [ ] semaphore
