@@ -6,3 +6,4 @@
 - [ ] Rancher
 - [ ] npm
 - [ ] semaphore
+- [ ] beszel
