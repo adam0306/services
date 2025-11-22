@@ -26,7 +26,6 @@ services:
           editable: false
         EOF
         /run.sh
-    container_name: grafana
     restart: unless-stopped
     user: '0'
     ports:
