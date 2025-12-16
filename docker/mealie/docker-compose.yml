@@ -26,8 +26,8 @@ services:
       POSTGRES_SERVER: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
-    secrets:
-      - mealie_pg_pw
+    #secrets:
+    #  - mealie_pg_pw
     depends_on:
       postgres:
         condition: service_healthy
@@ -73,8 +73,8 @@ services:
 #            - BACKUP_KEEP_MONTHS=6
 #            - HEALTHCHECK_PORT=8080
 
-  secrets:
-    mongodb-root-username:
-      external: true
-    mongodb-root-password:
-      external: true
+  # secrets:
+  #   mongodb-root-username:
+  #     external: true
+  #   mongodb-root-password:
+  #     external: true
